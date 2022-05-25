@@ -8,7 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE, ElementType.METHOD}) // Указываем, что аннотация @Retention может использоваться над классами и методами
+@Target({ElementType.TYPE, ElementType.METHOD}) 
 @Retention(RetentionPolicy.RUNTIME)
 @ExtendWith({AllureJunit5.class, SpoonApiTestExtension.class})
 public @interface SpoonApiTest {
