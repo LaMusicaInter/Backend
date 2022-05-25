@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 public class AddMealToMealPlanTest {
     private static String userName;
     private static String hash;
-    private Integer mealId;     // mealId, date, unixTime - статические, так для каждого теста их значения меняются
+    private Integer mealId;     
     private String date;
     private Long unixTime;
 
@@ -28,7 +28,7 @@ public class AddMealToMealPlanTest {
     static void beforeAll() {
         Faker faker = new Faker();
 
-        // Создаём пользователя
+        
         JsonPath jsonPath = given()
                 .body("{\n" +
                         "    \"username\": \"" + faker.funnyName().name() + "\",\n" +
@@ -49,11 +49,11 @@ public class AddMealToMealPlanTest {
     @BeforeEach
     void setUp() {
 
-        // Устанавливаем дату (пусть будет текущая)
+        
         date = LocalDate.now().toString();
         unixTime = Instant.now().getEpochSecond();
 
-        // Запрашиваем план питания пользователя на конкретный день, проверяем, что он пуст
+        
         given()
                 .queryParam("hash", hash)
                 .get("/mealplanner/{username}/day/{date}", userName, date)
@@ -69,7 +69,7 @@ public class AddMealToMealPlanTest {
     void addIngredientToMealPlanTest(Integer slot, Integer position, String name) {
         String type = "INGREDIENTS";
 
-        // Добавляем ингридиент к плану питания
+        
         mealId = given()
                 .queryParam("hash", hash)
                 .body("{\n" +
@@ -93,7 +93,7 @@ public class AddMealToMealPlanTest {
                 .jsonPath()
                 .getInt("id");
 
-        // Запрашиваем план питания пользователя на конкретный день и проверяем, что добавленная еда в нем присутствует
+        
         given()
                 .queryParam("hash", hash)
                 .get("/mealplanner/{username}/day/{date}", userName, date)
@@ -113,7 +113,7 @@ public class AddMealToMealPlanTest {
     void addRecipeToMealPlanTest(Integer slot, Integer position, Integer id, int servings, String title) {
         String type = "RECIPE";
 
-        // Добавляем рецепт к плану питания
+        
         mealId = given()
                 .queryParam("hash", hash)
                 .body("{\n" +
@@ -136,7 +136,7 @@ public class AddMealToMealPlanTest {
                 .jsonPath()
                 .getInt("id");
 
-        // Запрашиваем план питания пользователя на конкретный день и проверяем, что добавленная еда в нем присутствует
+       
         given()
                 .queryParam("hash", hash)
                 .get("/mealplanner/{username}/day/{date}", userName, date)
@@ -150,7 +150,7 @@ public class AddMealToMealPlanTest {
     @AfterEach
     void tearDown() {
 
-        // Удаляем добавленную еду
+        
         given()
                 .queryParam("hash", hash)
                 .delete("/mealplanner/{username}/items/{id}", userName, mealId)
