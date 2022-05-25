@@ -25,8 +25,8 @@ public class ClassifyCuisineTest {
                 .then()
                 .statusCode(200)
                 .contentType("application/json")
-                .body("", Matchers.notNullValue())        // Проверяем, что тело ответа не пустое
-                .body("", Matchers.hasKey("cuisine"))     // Проверяем, что ответ содержит поля, указанные в документации
+                .body("", Matchers.notNullValue())        
+                .body("", Matchers.hasKey("cuisine"))     
                 .body("", Matchers.hasKey("cuisines"))
                 .body("", Matchers.hasKey("confidence"));
     }
